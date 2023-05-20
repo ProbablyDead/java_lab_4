@@ -4,15 +4,15 @@ public class Request {
   private int delay;
 
   public int getFloor() {
-      return floor;
+    return floor;
   }
 
   public Direction getDirection() {
-      return direction;
+    return direction;
   }
 
   public int getDelay() {
-      return delay;
+    return delay;
   }
 
   @Override
