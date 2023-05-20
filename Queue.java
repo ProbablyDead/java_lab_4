@@ -1,22 +1,20 @@
 import java.util.ArrayList;
 import java.util.Random;
 
-import javafx.util.Pair;
-
 public class Queue extends Thread {
-  ArrayList<Pair<Integer, Boolean>> queuePairs;
+  private ArrayList<Request> queuePairs;
   
-  Queue (ArrayList<Pair<Integer, Boolean>> queuePairs) {
+  Queue (ArrayList<Request> queuePairs) {
     this.queuePairs = queuePairs;
   }
 
-  public static ArrayList<Pair<Integer, Boolean>> generateQueue (int requestsCount, int floorsCount) {
-    ArrayList<Pair<Integer, Boolean>> result = new ArrayList<Pair<Integer, Boolean>>();
+  public static ArrayList<Request> generateQueue (int requestsCount, int floorsCount, int maxDelay) {
+    ArrayList<Request> result = new ArrayList<>();
 
     Random random = new Random();
 
     for (int i = 0; i < requestsCount; ++i) {
-      result.add(new Pair<>(random.nextInt(floorsCount), random.nextBoolean()));
+      result.add(new Request(random.nextInt(floorsCount), random.nextBoolean(), random.nextInt(maxDelay)));
     }
 
     return result;
@@ -24,6 +22,12 @@ public class Queue extends Thread {
 
   @Override
   public void run () {
+    for (var request : queuePairs) {
+      System.out.println(request);
+      try {
+        sleep(500);
+      } catch (Exception exception) {}
+    }
 
   }
 }
