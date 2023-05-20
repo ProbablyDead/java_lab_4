@@ -8,13 +8,13 @@ public class Queue extends Thread {
     this.queuePairs = queuePairs;
   }
 
-  public static ArrayList<Request> generateQueue (int requestsCount, int floorsCount, int maxDelay) {
+  public static ArrayList<Request> generateQueue (int requestsCount, int floorsCount, int delay) {
     ArrayList<Request> result = new ArrayList<>();
 
     Random random = new Random();
 
     for (int i = 0; i < requestsCount; ++i) {
-      result.add(new Request(random.nextInt(floorsCount), random.nextBoolean(), random.nextInt(maxDelay)));
+      result.add(new Request(random.nextInt(floorsCount), Direction.getRandomDirection(random), delay));
     }
 
     return result;
@@ -25,9 +25,8 @@ public class Queue extends Thread {
     for (var request : queuePairs) {
       System.out.println(request);
       try {
-        sleep(500);
+        sleep(request.getDelay());
       } catch (Exception exception) {}
     }
-
   }
 }
