@@ -35,6 +35,30 @@ public class Queue extends Thread {
   }
 
   private void operate (Request request) {
-    elevator1.addFloorToQueue(request.getFloor());
+    int firstRange = Math.abs(elevator1.getFloor() - request.getFloor());
+    int secondRange = Math.abs(elevator2.getFloor() - request.getFloor());
+
+    if (firstRange < secondRange) {
+      elevator1.addFloorToQueue(request.getFloor());
+    }
+    else if (firstRange > secondRange) {
+      elevator2.addFloorToQueue(request.getFloor());
+    }
+    else {
+      if (elevator1.getDirection() == elevator2.getDirection() && elevator1.getDirection() == Direction.STANDING) {
+        if (elevator1.getFloor() < elevator2.getFloor()) {
+          elevator1.addFloorToQueue(request.getFloor());
+        }
+        else {
+          elevator2.addFloorToQueue(request.getFloor());
+        }
+      }
+      if (elevator1.getDirection() == request.getDirection()) {
+        elevator1.addFloorToQueue(request.getFloor());
+      }
+      else if (elevator2.getDirection() == request.getDirection()) {
+        elevator2.addFloorToQueue(request.getFloor());
+      }
+    }
   }
 }

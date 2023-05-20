@@ -5,6 +5,7 @@ public class Elevator extends Thread {
   private Direction direction;
   private ArrayDeque<Integer> queue;
   private final static int delay = 1000;
+  private int id;
 
   public int getFloor() {
     return floor;
@@ -26,10 +27,11 @@ public class Elevator extends Thread {
     this.queue.addLast(floor);
   }
   
-  Elevator () {
+  Elevator (int id) {
     floor = 0;
     direction = Direction.STANDING;
     queue = new ArrayDeque<>();
+    this.id = id;
   }
 
   private void move () {
@@ -58,7 +60,7 @@ public class Elevator extends Thread {
   public void run () {
     while (true) {
       move();
-      System.out.println(queue.isEmpty() ? "" : (queue + " ") + floor);
+      System.out.println(id + ": " + (queue.isEmpty() ? "" : queue + " ") + floor + " " + direction);
       try { sleep(delay); } catch (Exception exception) {}
     }
   }
